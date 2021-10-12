@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-env
+#env
 
 project_name=$(basename `git rev-parse --show-toplevel`)
 
