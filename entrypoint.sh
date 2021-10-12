@@ -17,8 +17,10 @@ else
   exit 1
 fi
 
+echo here
 mkdir -p ~/ROS2/"$project_name"_ws/
 cd "$GITHUB_WORKSPACE"
+echo there
 
 # Move all files inside  ~/ROS2/"$project_name"_ws/src
 rsync -aq --remove-source-files src ~/ROS2/"$project_name"_ws/
