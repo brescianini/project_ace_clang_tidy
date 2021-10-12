@@ -36,7 +36,7 @@ elif [ "$INPUT_VERSION" == 12 ] ; then
   clang_replacement_binary="clang-apply-replacements-12"
 else
   echo "$INPUT_VERSION"
-  printf "Expected version 10 or 12 but got %s" "$INPUT_VERSION" >&2  # write error message to stderr
+  printf "Expected version 10 or 12 but got blaHallo %s" "$INPUT_VERSION" >&2  # write error message to stderr
   exit 1
 fi
 
