@@ -13,7 +13,7 @@ elif [ "$INPUT_VERSION" == 12 ] ; then
   clang_binary="clang-tidy-12"
   clang_replacement_binary="clang-apply-replacements-12"
 else
-  echo "Expected version 10 or 12 but got $INPUT_VERSION"
+  echo "Check! Expected version 10 or 12 but got $INPUT_VERSION"
   exit 1
 fi
 
