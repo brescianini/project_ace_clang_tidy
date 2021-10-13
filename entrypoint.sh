@@ -13,7 +13,7 @@ elif [ "$INPUT_VERSION" == 12 ] ; then
   clang_binary="clang-tidy-12"
   clang_replacement_binary="clang-apply-replacements-12"
 else
-  echo "Check! Expected version 10 or 12 but got $INPUT_VERSION"
+  echo "Expected version 10 or 12 but got $INPUT_VERSION"
   exit 1
 fi
 
@@ -33,6 +33,7 @@ else
 fi
 
 # Compile and source workspace packages
+source /opt/ros/galactic/install/local_setup.bash
 cd "$GITHUB_WORKSPACE"
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_TESTING=OFF
 
