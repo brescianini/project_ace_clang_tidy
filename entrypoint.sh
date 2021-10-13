@@ -1,9 +1,7 @@
 #!/bin/bash
 
 set -e
-#env
-
-project_name=$(basename `git rev-parse --show-toplevel`)
+env
 
 # Determine the version of clang-tidy:
 if [ "$INPUT_VERSION" == 10 ] ; then
@@ -17,14 +15,6 @@ else
   exit 1
 fi
 
-echo here
-mkdir -p ~/ROS2/"$project_name"_ws/
-cd "$GITHUB_WORKSPACE"
-echo there
-
-# Move all files inside  ~/ROS2/"$project_name"_ws/src
-rsync -aq --remove-source-files src ~/ROS2/"$project_name"_ws/
-
 # Determine the version of clang-tidy:
 if [ "$INPUT_VERSION" == 10 ] ; then
   clang_binary="clang-tidy"
@@ -36,14 +26,13 @@ elif [ "$INPUT_VERSION" == 12 ] ; then
   clang_replacement_binary="clang-apply-replacements-12"
 else
   echo "$INPUT_VERSION"
-  printf "Expected version 10 or 12 but got blaHallo %s" "$INPUT_VERSION" >&2  # write error message to stderr
+  printf "Expected version 10 or 12 but got %s" "$INPUT_VERSION" >&2  # write error message to stderr
   exit 1
 fi
 
 # Compile and source workspace packages
-cd ~/ROS2/"$project_name"_ws/
+cd "$GITHUB_WORKSPACE"
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_TESTING=OFF
-
 
 # Read list of ignored directories
 ignored_paths=()
@@ -54,8 +43,6 @@ for path in "${ignored_paths[@]}"; do echo "$path"; done
 all_passed=true
 
 echo "Running script"
-cp "$GITHUB_WORKSPACE"/.clang-tidy .
-cp "$GITHUB_WORKSPACE"/.clang-tidy-ignore .
 mv /run-clang-tidy.py .
 time python3 run-clang-tidy.py -p build \
                                -directory src \
@@ -69,9 +56,9 @@ if [ $retval -ne 0 ]; then
 fi
 
 if [ "$all_passed" = false ]; then
-    echo "Fixes in files required. Exiting"
+    echo "Fixes in files required. Exiting."
     exit 1
 else
-    echo "Clang-tidy did not detect any problem"
+    echo "Clang-tidy did not detect any problem."
     git diff --exit-code
 fi

@@ -1,6 +1,6 @@
-name: 'ROS 2 Clang tidy'
+name: 'Project ACE clang tidy'
 author: 'Guillem Torrente (tmguillem)'
-description: 'Github Action that builds a ROS 2 package and executes Clang tidy in it'
+description: 'Github Action that builds a ROS 2 package and executes clang tidy in it'
 branding:
   icon: 'activity'  
   color: blue
