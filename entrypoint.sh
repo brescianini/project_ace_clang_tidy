@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /root/.bashrc
+
 set -e
 env
 
